@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drone Service App</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+</head>
+<body>
+  <header>
+    <h1>Drone Service</h1>
+  </header>
+
+  <section id="mission-details">
+    <h2>Request a Drone Mission</h2>
+    <form id="drone-form">
+      <label for="location">Location (Latitude, Longitude):</label>
+      <input type="text" id="location" name="location" required placeholder="E.g., 37.7749,-122.4194">
+
+      <label for="mission-type">Mission Type:</label>
+      <select id="mission-type" name="mission-type" required>
+        <option value="delivery">Delivery</option>
+        <option value="inspection">Inspection</option>
+        <option value="photography">Photography</option>
+      </select>
+
+      <button type="submit">Submit Mission</button>
+    </form>
+  </section>
+
+  <section id="mission-status">
+    <h2>Mission Status</h2>
+    <div id="status-message">No active missions</div>
+    <div id="mission-map" style="height: 400px;"></div>
+  </section>
+
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
