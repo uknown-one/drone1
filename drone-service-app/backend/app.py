@@ -1,6 +1,11 @@
 from flask import Flask, request, jsonify
 import random
 from database import init_db, add_mission, get_mission_by_id
+from flask_cors import CORS   # <-- new import
+
+app = Flask(__name__)
+CORS(app)  # <-- enable CORS for all routes
+
 
 app = Flask(__name__)
 
