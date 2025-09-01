@@ -6,6 +6,8 @@
 
 Is a simple full-stack application that allows users to request drone services (delivery, inspection, photography). Users can request drone missions, track progress, and visualize mission locations on an interactive map.
 
+---
+
 # The app includes:
 
 * **Frontend** (HTML/CSS/JS) for submitting missions and viewing status.
