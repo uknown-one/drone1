@@ -26,18 +26,7 @@ A simple full-stack application that allows users to request drone missions (del
 ## 📂 Project Structure
 
 ```
-drone-service-app/
-├── backend/
-│   ├── app.py
-│   ├── database.py
-│   ├── requirements.txt
-│   └── templates/        # Flask will look here for HTML
-│       └── index.html
-│   └── static/           # Flask will serve static files
-│       ├── style.css
-│       └── app.js
-├── missions.db
-└── README.md
+
 
 ```
 
