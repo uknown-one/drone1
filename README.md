@@ -28,18 +28,17 @@ A simple full-stack application that allows users to request drone missions (del
 ```
 drone-service-app/
 ├── backend/
-│   ├── app.py            # Flask backend server
-│   ├── database.py       # SQLite database operations
-│   ├── config.py         # Config (DB path, keys, etc.)
-│   ├── requirements.txt  # Python dependencies
-├── frontend/
-│   ├── index.html        # UI for requesting missions
-│   ├── style.css         # Styling
-│   ├── app.js            # Frontend logic (fetch API + map)
-│   └── images/           # UI images/icons
-├── missions.db           # SQLite database (auto-created)
-├── .gitignore            # Ignore files like __pycache__, missions.db
-└── README.md             # Documentation
+│   ├── app.py
+│   ├── database.py
+│   ├── requirements.txt
+│   └── templates/        # Flask will look here for HTML
+│       └── index.html
+│   └── static/           # Flask will serve static files
+│       ├── style.css
+│       └── app.js
+├── missions.db
+└── README.md
+
 ```
 
 ---
@@ -55,6 +54,7 @@ Python dependencies (in `backend/requirements.txt`):
 ```txt
 Flask==2.1.2
 requests==2.26.0
+flask-cors==3.0.10
 ```
 
 ---
@@ -64,8 +64,8 @@ requests==2.26.0
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/drone-service-app.git
-cd drone-service-app
+git clone https://github.com/uknown-one/drone1/
+cd drone1
 ```
 
 ### 2. Setup Python Virtual Environment
