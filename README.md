@@ -58,6 +58,7 @@ drone1/
 ```bash
 git clone https://github.com/uknown-one/drone1/
 cd drone1
+cd drone-service-app
 ```
 
 ### 2. Setup Python Virtual Environment
