@@ -24,8 +24,8 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # Single deploy job since we're just deploying
-  deploy:
+  # Buillds amd deploys job 
+  build-deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -47,7 +47,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Install Python dependencies
-        working-directory: /drone-service-app/backend
+        working-directory: ./drone-service-app/backend
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
@@ -59,25 +59,25 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Install Node.js dependencies
-        working-directory: /drone-service-app/frontend
+        working-directory: ./drone-service-app/frontend
         run: |
           npm install
 
       # Optional: run frontend build (if you have build step)
       - name: Build frontend
-        working-directory: /drone-service-app/frontend
+        working-directory: ./drone-service-app/frontend
         run: |
           npm run build || echo "No build step defined"
 
       # Run tests for Python backend
       - name: Run backend tests
-        working-directory: /drone-service-app/backend
+        working-directory: ./drone-service-app/backend
         run: |
           pytest || echo "No tests found"
 
       # Run tests for frontend
       - name: Run frontend tests
-        working-directory: /drone-service-app/frontend
+        working-directory: ./drone-service-app/frontend
         run: |
           npm test || echo "No frontend tests found"
         
