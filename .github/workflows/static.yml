@@ -49,8 +49,8 @@ jobs:
           node-version: "18"
 
       - name: Install Node.js dependencies
-        working-directory: ./drone-service-app/frontend
         run: |
+          cd frontend
           npm install
 
       - name: Build frontend
