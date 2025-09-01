@@ -26,6 +26,36 @@ document.getElementById('drone-form').addEventListener('submit', function (event
     const missionId = data.mission_id;
     statusDiv.textContent = `Mission ID: ${missionId} started successfully!`;
 
+    // Try parsing "lat,lon"
+    const coords = location.split(',');
+    if (coords.length === 2) {
+      const lat = parseFloat(coords[0]);
+      const lon = parseFloat(coords[1]);
+      if (!isNaN(lat) && !isNaN(lon)) {
+        addMissionMarker(lat, lon, data.mission_id);
+      }
+    }
+  })
+  .catch(error => {
+    document.getElementById('status-message').textContent =
+      'An error occurred. Please try again.';
+    console.error('Error:', error);
+  });
+});
+
+// Initialize map
+let map = L.map('map').setView([37.7749, -122.4194], 10); // Default SF
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© OpenStreetMap contributors'
+}).addTo(map);
+
+// Add marker function
+function addMissionMarker(lat, lon, missionId) {
+  L.marker([lat, lon]).addTo(map)
+    .bindPopup(`Mission ${missionId}`)
+    .openPopup();
+}
+
    // Poll mission status every 3 seconds
     const interval = setInterval(() => {
       fetch(`${API_BASE}/api/mission_status/${missionId}`)
