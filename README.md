@@ -28,7 +28,7 @@ Is a simple full-stack application that allows users to request drone services (
 
 ```
 drone1/
-|___ drone_service_app
+|___ drone-service-app
 |
 ├── backend/
 │   ├── app.py              # Flask app entry point
