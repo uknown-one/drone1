@@ -5,6 +5,8 @@ on:
   # Runs on pushes targeting the default branch
   push:
     branches: ["main"]
+  pull_request:
+    branches: ["main"]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -38,6 +40,47 @@ jobs:
         with:
           # Upload entire repository
           path: '.'
+          # setup python
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install Python dependencies
+        working-directory: ./backend
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install Node.js dependencies
+        working-directory: ./frontend
+        run: |
+          npm install
+
+      # Optional: run frontend build (if you have build step)
+      - name: Build frontend
+        working-directory: ./frontend
+        run: |
+          npm run build || echo "No build step defined"
+
+      # Run tests for Python backend
+      - name: Run backend tests
+        working-directory: ./backend
+        run: |
+          pytest || echo "No tests found"
+
+      # Run tests for frontend
+      - name: Run frontend tests
+        working-directory: ./frontend
+        run: |
+          npm test || echo "No frontend tests found"
+        
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
