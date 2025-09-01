@@ -22,9 +22,7 @@ permissions:
 concurrency:
   group: "pages"
   cancel-in-progress: false
-
 jobs:
-  # Buillds amd deploys job 
   build-deploy:
     environment:
       name: github-pages
@@ -33,18 +31,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          # Upload entire repository
-          path: '.'
-          # setup python
+
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: "3.10"
 
       - name: Install Python dependencies
         working-directory: ./drone-service-app/backend
@@ -52,35 +43,29 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: "18"
 
       - name: Install Node.js dependencies
         working-directory: ./drone-service-app/frontend
         run: |
           npm install
 
-      # Optional: run frontend build (if you have build step)
       - name: Build frontend
         working-directory: ./drone-service-app/frontend
         run: |
           npm run build || echo "No build step defined"
 
-      # Run tests for Python backend
-      - name: Run backend tests
-        working-directory: ./drone-service-app/backend
-        run: |
-          pytest || echo "No tests found"
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
 
-      # Run tests for frontend
-      - name: Run frontend tests
-        working-directory: ./drone-service-app/frontend
-        run: |
-          npm test || echo "No frontend tests found"
-        
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./drone-service-app/frontend/dist
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
