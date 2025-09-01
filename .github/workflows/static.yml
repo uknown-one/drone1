@@ -50,11 +50,10 @@ jobs:
 
       - name: Install Node.js dependencies
         run: |
-          cd frontend
           npm install
 
       - name: Build frontend
-        working-directory: ./drone-service-app/frontend
+        working-directory: ./drone-service-app/frontend/app.js
         run: |
           npm run build || echo "No build step defined"
 
