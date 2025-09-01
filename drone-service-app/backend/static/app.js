@@ -22,16 +22,28 @@ document.getElementById('drone-form').addEventListener('submit', function (event
   })
   .then(response => response.json())
   .then(data => {
-    document.getElementById('status-message').textContent =
-      `Mission ID: ${data.mission_id} started successfully! Fetching status...`;
+    const statusDiv = document.getElementById('status-message');
+    const missionId = data.mission_id;
+    statusDiv.textContent = `Mission ID: ${missionId} started successfully!`;
 
-    // Fetch mission status automatically
-    return fetch(`${API_BASE}/api/mission_status/${data.mission_id}`);
-  })
-  .then(response => response.json())
-  .then(statusData => {
-    document.getElementById('status-message').textContent +=
-      ` Current status: ${statusData.status}`;
+   // Poll mission status every 3 seconds
+    const interval = setInterval(() => {
+      fetch(`${API_BASE}/api/mission_status/${missionId}`)
+        .then(resp => resp.json())
+        .then(statusData => {
+          statusDiv.textContent = `Mission ID: ${missionId} | Status: ${statusData.status}`;
+
+          // Stop polling if mission is completed
+          if (statusData.status.toLowerCase() === 'completed') {
+            clearInterval(interval);
+          }
+        })
+        .catch(err => {
+          statusDiv.textContent = 'Error fetching mission status.';
+          console.error(err);
+          clearInterval(interval);
+        });
+    }, 3000); // 3 seconds
   })
   .catch(error => {
     document.getElementById('status-message').textContent =
