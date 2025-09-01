@@ -2,13 +2,14 @@
 
 ---
 
-# Drone Service App
+# Drone1
 
-A simple full-stack application that allows users to request drone missions (delivery, inspection, photography). The app includes:
+Is a simple full-stack application that allows users to request drone services (delivery, inspection, photography). Users can request drone missions, track progress, and visualize mission locations on an interactive map.
+
+# The app includes:
 
 * **Frontend** (HTML/CSS/JS) for submitting missions and viewing status.
 * **Backend** (Flask) for handling mission requests.
-* **Database** (SQLite) for storing mission history.
 * **Map Integration** (Leaflet.js) for visualizing mission locations.
 
 ---
@@ -26,24 +27,23 @@ A simple full-stack application that allows users to request drone missions (del
 ## 📂 Project Structure
 
 ```
+drone_service_app/
+│
+├── backend/
+│   ├── app.py              # Flask app entry point
+│   ├── pipeline.py         # Orchestrates mission lifecycle with drone control
+│   ├── drone_control.py    # Drone mission simulation logic
+│   ├── config.py           # App configuration (settings, constants)
+│   ├── requirements.txt    # Python dependencies
+│   └── __init__.py
+│
+├── frontend/
+│   ├── index.html          # UI with Leaflet map + form
+│   ├── app.js              # Frontend logic (API calls, updates map)
+│   └── styles.css          # Styling
+│
+└── README.md               # Project documentation
 
-
-```
-
----
-
-## 🛠️ Requirements
-
-* **Python 3.8+**
-* **pip** (Python package manager)
-* **Node.js (optional)** for live-reloading frontend
-
-Python dependencies (in `backend/requirements.txt`):
-
-```txt
-Flask==2.1.2
-requests==2.26.0
-flask-cors==3.0.10
 ```
 
 ---
@@ -82,56 +82,13 @@ Server will run at **[http://127.0.0.1:5000/](http://127.0.0.1:5000/)**
 
 ### 5. Open Frontend
 
-Open `frontend/index.html` in your browser.
-It will connect to the backend API (`/api/start_mission`).
+Open frontend/index.html directly in your browser OR serve it with Flask (optional).
 
----
+The frontend communicates with Flask endpoints:
 
-## 🗄️ Database
+   /api/start_mission
 
-SQLite (`missions.db`) is used to store missions.
-
-* The database and table are auto-created on first run.
-* To inspect data:
-
-```bash
-sqlite3 missions.db
-sqlite> SELECT * FROM missions;
-```
-
----
-
-## 🌍 API Endpoints
-
-### Start Mission
-
-```http
-POST /api/start_mission
-```
-
-**Body (JSON):**
-
-```json
-{
-  "location": "37.7749,-122.4194",
-  "mission_type": "delivery"
-}
-```
-
-**Response:**
-
-```json
-{
-  "message": "Mission started successfully!",
-  "mission_id": 1234
-}
-```
-
-### Get Mission Status
-
-```http
-GET /api/mission_status/<mission_id>
-```
+  /api/mission_status
 
 ---
 
