@@ -27,8 +27,9 @@ Is a simple full-stack application that allows users to request drone services (
 ## 📂 Project Structure
 
 ```
-drone_service_app/
-│
+drone1/
+|___ drone_service_app
+|
 ├── backend/
 │   ├── app.py              # Flask app entry point
 │   ├── pipeline.py         # Orchestrates mission lifecycle with drone control
